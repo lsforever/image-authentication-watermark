@@ -36,3 +36,24 @@ def embedWatermarkGrayScale(mainImg, markImg, k=0.85, q=0.009):
     ]
 
     return items
+
+def extractWatermarkGrayScale(mainImg, waterMarkedImg, k=0.85, q=0.009):
+    main_image_gray_array = np.mean(mainImg, -1)
+    water_marked_image_gray_array = np.array(waterMarkedImg)
+    
+    # dwt algorith
+    waterMarkedImg_dwt = pywt.dwt2(water_marked_image_gray_array, 'haar')
+    wLL, (wLH, wHL, wHH) = waterMarkedImg_dwt
+    
+    mainImg_dwt = pywt.dwt2(main_image_gray_array, 'haar')
+    LL, (LH, HL, HH) = mainImg_dwt
+
+    # Alpha blending extract algorithm
+    water_mark_coeficient_LL = (wLL - k*LL) /q
+
+    extracted_watermark_dwt = water_mark_coeficient_LL, (wLH, wHL, wHH)
+
+    # Inverse dwt algorith
+    extracted_watermark = pywt.idwt2(extracted_watermark_dwt, 'haar')
+    
+    return Image.fromarray(extracted_watermark)

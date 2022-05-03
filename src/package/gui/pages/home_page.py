@@ -44,6 +44,11 @@ class HomePage(tk.Frame):
         # img_label_3.pack()
         
         
+        extracted_mark = extractWatermarkGrayScale(image,items[2])
+        img_extrac = ImageTk.PhotoImage(extracted_mark.resize((200,200), Image.ANTIALIAS))
+        img_extrac_label = Label(self, image=img_extrac)
+        img_extrac_label.image = img_extrac
+        img_extrac_label.grid(row = 1, column = 0, sticky = W, pady = 2)
         
         # grid method to arrange labels in respective
         # rows and columns as specified
