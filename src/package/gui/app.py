@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import *
-import time
 
 import src.package.gui.extentions as U
 #import extentions as U

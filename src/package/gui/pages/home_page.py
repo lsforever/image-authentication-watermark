@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import src.package.gui.extentions as U
 
 # ---------------------------------------- HOME PAGE FRAME / CONTAINER ------------------------------------------------------------------------
 
@@ -7,10 +8,21 @@ class HomePage(tk.Frame):
     def __init__(self, parent, container):
         super().__init__(container)
 
-        label = tk.Label(self, text="Home Page", font=('Times', '20'))
-        label.pack(pady=0, padx=0)
+        #label = tk.Label(self, text="Home Page", font=('Times', '20'))
+        #label.pack(pady=0, padx=0)
 
-        # ADD CODE HERE TO DESIGN THIS PAGE
+        # CODE FOR THIS PAGE
+        
+        # this will create a label widget
+        l1 = Label(self, text = "Height")
+        l2 = Label(self, text = "Width")
+        
+        # grid method to arrange labels in respective
+        # rows and columns as specified
+        l1.grid(row = 0, column = 0, sticky = W, pady = 2)
+        l2.grid(row = 1, column = 0, sticky = W, pady = 2)
+
+
 
     def create_menubar(self, parent):
         menubar = Menu(parent, bd=3, relief=RAISED, activebackground="#80B9DC")

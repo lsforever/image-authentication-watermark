@@ -1,5 +1,6 @@
 import tkinter as tk
 from tkinter import *
+import src.package.gui.extentions as U
 
 # ---------------------------------------- Validation PAGE FRAME / CONTAINER ------------------------------------------------------------------------
 
