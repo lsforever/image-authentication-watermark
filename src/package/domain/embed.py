@@ -1,11 +1,10 @@
 import numpy as np
+import cv2
 import pywt
 from PIL import Image
 
 # Images should be same lenght and height
 # This only uses grascale not full rgba
-
-
 def embedWatermarkGrayScale(mainImg, markImg, k=0.85, q=0.009):
     main_image_gray_array = np.mean(mainImg, -1)
     mark_image_gray_array = np.mean(markImg, -1)
@@ -37,6 +36,8 @@ def embedWatermarkGrayScale(mainImg, markImg, k=0.85, q=0.009):
 
     return items
 
+# Images should be same lenght and height
+# This only uses grascale not full rgba
 def extractWatermarkGrayScale(mainImg, waterMarkedImg, k=0.85, q=0.009):
     main_image_gray_array = np.mean(mainImg, -1)
     water_marked_image_gray_array = np.array(waterMarkedImg)
@@ -57,3 +58,20 @@ def extractWatermarkGrayScale(mainImg, waterMarkedImg, k=0.85, q=0.009):
     extracted_watermark = pywt.idwt2(extracted_watermark_dwt, 'haar')
     
     return Image.fromarray(extracted_watermark)
+
+
+# ===============================================================
+# Actual code below
+
+# Images should be same lenght and height
+# This divides full rgba numpy arrays
+def addWaterMark(mainImg, markImg, k=0.85, q=0.009):
+    b, g, r = cv2.split(image)
+    main_image_gray_array = np.mean(mainImg, -1)
+    return k
+
+# Give RGBA arrays for this to process seperately
+# This method embeds and do stuff to a seperate rgba numpy array
+def embedMarkToArray(img_array_part, markImg, k=0.85, q=0.009):
+    main_image_gray_array = np.mean(mainImg, -1)
+    return k
