@@ -3,7 +3,7 @@ from tkinter import *
 
 # ---------------------------------------- Validation PAGE FRAME / CONTAINER ------------------------------------------------------------------------
 
-class StartPage_01(tk.Frame):
+class StartPage(tk.Frame):
     def __init__(self, parent, container):
         super().__init__(container)
 
@@ -16,7 +16,7 @@ class StartPage_01(tk.Frame):
         self.rowconfigure(2, weight=1)
         
         # this will create a label widget
-        l1 = Label(self, text = "DWT black and white")
+        l1 = Label(self, text = "1 level DWT black and white \nEmbedding - Uses alpha blending for same size images")
         l2 = Label(self, text = "Select Original Image and the Warter Mark Image below")
         l3 = LabelFrame(self, text = "Select Encryption keys",height=200, width=200)
         

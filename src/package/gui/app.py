@@ -1,5 +1,7 @@
 import tkinter as tk
 from tkinter import *
+from tkinter import ttk
+# TODO add ttk widgets to this one
 
 import src.package.gui.extentions as U
 #import extentions as U
@@ -7,7 +9,7 @@ import src.package.gui.extentions as U
 #import pages
 from src.package.gui.pages.home_page import HomePage
 from src.package.gui.pages.validation_page import Validation
-from src.package.gui.pages.method_01_b_and_w.start_page import StartPage_01
+from src.package.gui.pages.methods.method_1.start_page import StartPage as StartPage_1
 
 
 class App(tk.Tk):
@@ -34,14 +36,14 @@ class App(tk.Tk):
         self.Validation = Validation
 
         # method 01 frames
-        self.StartPage_01 = StartPage_01
+        self.StartPage_1 = StartPage_1
 
         # Defining Frames and Packing it
         for F in {
             HomePage,
             Validation,
             # method 01 frames
-            StartPage_01,
+            StartPage_1,
         }:
             frame = F(self, container)
             self.frames[F] = frame
