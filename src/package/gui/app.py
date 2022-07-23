@@ -9,7 +9,7 @@ import src.package.gui.extentions as U
 #import pages
 from src.package.gui.pages.home_page import HomePage
 from src.package.gui.pages.validation_page import Validation
-from src.package.gui.pages.methods.method_1.start_page import StartPage as StartPage_1
+from src.package.gui.pages.methods.method_1.m1_page_1 import M1_Page_1
 
 
 class App(tk.Tk):
@@ -36,14 +36,13 @@ class App(tk.Tk):
         self.Validation = Validation
 
         # method 01 frames
-        self.StartPage_1 = StartPage_1
+        self.m1_frames = {}
+        self.M1_Page_1 = M1_Page_1
 
         # Defining Frames and Packing it
         for F in {
             HomePage,
-            Validation,
-            # method 01 frames
-            StartPage_1,
+            Validation, 
         }:
             frame = F(self, container)
             self.frames[F] = frame
@@ -57,6 +56,21 @@ class App(tk.Tk):
         menubar = create_menubar(self, self)
         self.configure(menu=menubar)
         frame.tkraise()  # This line will put the frame on front
+    
+    # method 1 frames
+    def show_m1_frame(self, cont):
+        frame = self.m1_frames[cont]
+        if cont == self.M1_Page_1:
+            pass
+        elif cont == self.M1_Page_1:
+            pass
+        else:
+            return
+        
+        menubar = create_menubar(self, self)
+        self.configure(menu=menubar)
+        frame.tkraise()
+        
 
 
 def create_menubar(self, parent):
