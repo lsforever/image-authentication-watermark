@@ -9,7 +9,9 @@ import src.package.gui.extentions as U
 #import pages
 from src.package.gui.pages.home_page import HomePage
 from src.package.gui.pages.validation_page import Validation
+
 from src.package.gui.pages.methods.method_1.m1_page_1 import M1_Page_1
+from src.package.gui.pages.methods.method_1.m1_page_2 import M1_Page_2
 
 
 class App(tk.Tk):
@@ -25,10 +27,10 @@ class App(tk.Tk):
         self.minsize(500, 300)
 
         # Creating a container
-        container = tk.Frame(self, bg="#8AA7A9")
-        container.pack(side="top", fill="both", expand=True)
-        container.grid_rowconfigure(0, weight=1)
-        container.grid_columnconfigure(0, weight=1)
+        self.container = tk.Frame(self, bg="#8AA7A9")
+        self.container.pack(side="top", fill="both", expand=True)
+        self.container.grid_rowconfigure(0, weight=1)
+        self.container.grid_columnconfigure(0, weight=1)
 
         # Initialize Frames
         self.frames = {}
@@ -38,39 +40,52 @@ class App(tk.Tk):
         # method 01 frames
         self.m1_frames = {}
         self.M1_Page_1 = M1_Page_1
+        self.M1_Page_2 = M1_Page_2
 
         # Defining Frames and Packing it
         for F in {
             HomePage,
-            Validation, 
+            Validation,
         }:
-            frame = F(self, container)
+            frame = F(self, self.container)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
 
         self.show_frame(HomePage)
 
     def show_frame(self, cont):
+        # TODO update here when new m1 methods are added.
+        if cont == self.HomePage:
+            self.m1_frames ={}
+        
         frame = self.frames[cont]
         # menubar = frame.create_menubar(self)
         menubar = create_menubar(self, self)
         self.configure(menu=menubar)
         frame.tkraise()  # This line will put the frame on front
-    
+
     # method 1 frames
-    def show_m1_frame(self, cont):
-        frame = self.m1_frames[cont]
+    def show_m1_frame(self, cont, data={}):
+        final = None
         if cont == self.M1_Page_1:
-            pass
-        elif cont == self.M1_Page_1:
-            pass
+            if self.M1_Page_1 in self.m1_frames:
+                final = self.m1_frames[self.M1_Page_1]
+            else:
+                final = self.M1_Page_1(self, self.container)
+            self.m1_frames = {}
+            self.m1_frames[self.M1_Page_1] = final
+        elif cont == self.M1_Page_2:
+            if self.M1_Page_2 in self.m1_frames:
+                final = self.m1_frames[self.M1_Page_2]
+            else:
+                final = self.M1_Page_2(self, self.container, data)
+                self.m1_frames[self.M1_Page_2] = final
         else:
             return
-        
+        final.grid(row=0, column=0, sticky="nsew")
         menubar = create_menubar(self, self)
         self.configure(menu=menubar)
-        frame.tkraise()
-        
+        final.tkraise()
 
 
 def create_menubar(self, parent):

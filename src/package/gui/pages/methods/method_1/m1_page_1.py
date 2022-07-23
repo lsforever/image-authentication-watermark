@@ -1,36 +1,132 @@
+from ast import And
 import tkinter as tk
 from tkinter import ttk
 from tkinter import *
+from tkinter import filedialog
+from src.package.utils.constants import *
+
+from tkinter.messagebox import showinfo
+from PIL import Image, ImageTk
+import cv2
+
 
 # ---------------------------------------- M1_page_1 FRAME / CONTAINER ------------------------------------------------------------------------
 
 class M1_Page_1(tk.Frame):
-    
+
     def __init__(self, parent, container):
         super().__init__(container)
-        
+
         # CODE FOR THIS PAGE
+
+        self.data = {}
+        self.a1 =''
+        self.a2 =''
+
+        filetypes = (
+            ('PNG, JPEG files', '*.PNG *.JPEG'),
+        )
+
+        def default_img():
+            self.data[ORIGINAL_IMAGE_PATH] = DEFAULT_ORIGINAL_IMAGE_PATH
+            self.data[WATERMARK_IMAGE_PATH] = DEFAULT_WATERMARK_IMAGE_PATH
+            l7.config(text = "Default image selected")
+            l8.config(text = "Default watermark selected")
+            a1 = Image.open(DEFAULT_ORIGINAL_IMAGE_PATH)
+            a2 = Image.open(DEFAULT_WATERMARK_IMAGE_PATH)
+            self.data[ORIGINAL_IMAGE] = ImageTk.PhotoImage(a1)
+            self.data[WATERMARK_IMAGE] = ImageTk.PhotoImage(a2)
+            img1.configure(image=self.data[ORIGINAL_IMAGE])
+            img2.configure(image=self.data[WATERMARK_IMAGE])
+            
+
+        def choose_original():
+            self.data[ORIGINAL_IMAGE_PATH] = filedialog.askopenfilename(
+                title='Select Original Image ...',
+                filetypes=filetypes,
+            )
+
+        def choose_watermark():
+            self.data[WATERMARK_IMAGE_PATH] = filedialog.askopenfilename(
+                title='Select Watermark Image ...',
+                filetypes=filetypes,
+            )
+
+        def generate_enc():
+            pass
+
+        def back():
+            parent.show_frame(parent.HomePage)
+
+        def next():
+            # TODO check rquirements before next ///// encrpt add //// and (ENCRYPTION_KEY in data)
+            if (ORIGINAL_IMAGE_PATH in self.data) and (WATERMARK_IMAGE_PATH in self.data):
+                parent.show_m1_frame(parent.M1_Page_2)
+            else:
+                showinfo(
+                    title='Incomplete',
+                    message='Select Images and Encryption key before continuing.')
+
+        # UI basic part -------------------------------------------------------------------------------------------------------
         
-        l1 = ttk.Label(self, text = "Image Authention Using watermark", font=('Times', '15'))
-        l2 = ttk.Label(self, text = "Level 1 DWT(Discrete Wawelet Transformation with 'haar' algorithm",font=('Times', '10'))
-        l3 = ttk.Label(self, text = "Alpha bleding embeding algorithm",font=('Times', '10'))
-        l4 = ttk.Label(self, text = "Gray Scale (Better for psnr)",font=('Times', '10'))
-        l5 = ttk.Label(self, text = "Uses Encryption",font=('Times', '10'))
         
-        l6 = ttk.Label(self, text = "Choose your image and watermark image below\n(Select same size images for testing psnr ratios)")
-    
-        l7 = ttk.Label(self, text = "Enter your encryption key")
-        l8 = ttk.Label(self, text = "Generate a new encryption key")
-        
+        img1 = ttk.Label(self, image=self.a1)
+        img2 = ttk.Label(self, image=self.a2)
+
+        l1 = ttk.Label(
+            self, text="Image Authention Using watermark", font=('Times', '15'))
+        l2 = ttk.Label(
+            self, text="Level 1 DWT(Discrete Wawelet Transformation with 'haar' algorithm", font=('Times', '10'))
+        l3 = ttk.Label(
+            self, text="Alpha bleding embeding algorithm", font=('Times', '10'))
+        l4 = ttk.Label(self, text="Gray Scale (Better for psnr)",
+                       font=('Times', '10'))
+        l5 = ttk.Label(self, text="Uses Encryption", font=('Times', '10'))
+
+        l6 = ttk.Label(
+            self, text="Choose your image and watermark image below\n(Select same size images for testing psnr ratios. Or else images will be cropped)")
+        l7 = ttk.Label(
+            self, text="Not selected")
+        l8 = ttk.Label(
+            self, text="Not selected")
+        l9 = ttk.Label(self, text="Enter your encryption key")
+        l10 = ttk.Label(self, text="Generate a new encryption key")
+
+
+        b1 = ttk.Button(self, text="Use Defualt Images",
+                        command=default_img)
+        b2 = ttk.Button(self, text="Choose Original Image",
+                        command=choose_original)
+        b3 = ttk.Button(self, text="Choose Watermark Image",
+                        command=choose_watermark)
+        b4 = ttk.Button(self, text="Generate New Encryption Key",
+                        command=generate_enc)
+        b5 = ttk.Button(self, text="Back",
+                        command=back)
+        b6 = ttk.Button(self, text="Next",
+                        command=next)
+
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=0)
 
-        l1.grid(row = 0, column = 0, sticky = W, pady = (2,10))
-        l2.grid(row = 1, column = 0, sticky = W, pady = 2)
-        l3.grid(row = 2, column = 0, sticky = W, pady = 2)
-        l4.grid(row = 3, column = 0, sticky = W, pady = 2)
-        l5.grid(row = 4, column = 0, sticky = W, pady = 2)
+        l1.grid(row=0, column=0, sticky=W, pady=(2, 10), padx=5)
+        l2.grid(row=1, column=0, sticky=W, pady=0, padx=5)
+        l3.grid(row=2, column=0, sticky=W, pady=0, padx=5)
+        l4.grid(row=3, column=0, sticky=W, pady=0, padx=5)
+        l5.grid(row=4, column=0, sticky=W, pady=0, padx=5)
         
-        l6.grid(row = 5, column = 0, sticky = W, pady = (20,2))
-        l7.grid(row = 6, column = 0, sticky = W, pady = 2)
-        l8.grid(row = 7, column = 0, sticky = W, pady = 2)
+        l6.grid(row=5, column=0, sticky=W, pady=(20, 2), padx=5)
+        l7.grid(row=6, column=0, sticky=W, pady=2, padx=5)
+        l8.grid(row=7, column=0, sticky=W, pady=2, padx=5)
+        l9.grid(row=8, column=0, sticky=W, pady=2, padx=5)
+        l10.grid(row=9, column=0, sticky=W, pady=2, padx=5)
+
+        b1.grid(row=10, column=0, sticky=W, pady=2, padx=5)
+        b2.grid(row=11, column=0, sticky=W, pady=2, padx=5)
+        b3.grid(row=12, column=0, sticky=W, pady=2, padx=5)
+        b4.grid(row=13, column=0, sticky=W, pady=2, padx=5)
+        b5.grid(row=14, column=0, sticky=W, pady=2, padx=5)
+        b6.grid(row=15, column=0, sticky=W, pady=2, padx=5)
+        
+        img1.grid(row=16, column=0, sticky=W, pady=2, padx=5)
+        img2.grid(row=17, column=0, sticky=W, pady=2, padx=5)

@@ -3,6 +3,7 @@ from tkinter import ttk
 from src.package.gui.pages.methods.methods_list import methods_list
 
 
+
 # ---------------------------------------- HOME PAGE FRAME / CONTAINER ------------------------------------------------------------------------
 
 class HomePage(ttk.Frame):
@@ -29,11 +30,11 @@ class HomePage(ttk.Frame):
         def start():
             id = list(methods_list)[combo_box.current()]
             if id == 'm_1':
-                parent.show_frame(parent.M1_Page_1)
+                parent.show_m1_frame(parent.M1_Page_1)
             elif id == 'm_2':
-                parent.show_frame(parent.M1_Page_1)
+                parent.show_m1_frame(parent.M1_Page_1)
             else:
-                parent.show_frame(parent.M1_Page_1)
+                pass
             
         
         b1 = ttk.Button(self,text="Start", command=start, style='W.TButton')
