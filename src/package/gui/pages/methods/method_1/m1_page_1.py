@@ -17,31 +17,17 @@ class M1_Page_1(tk.Frame):
     def __init__(self, parent, container):
         super().__init__(container)
 
-        # Scrolling code
-        scroll = ScrollableFrame(self)
-        view = scroll.scrollable_frame
-
-        # main_frame = Frame(self)
-        # main_frame.pack(fill=BOTH, expand=1)
-
-        # canvas = Canvas(main_frame)
-        # canvas.pack(side=LEFT,fill=BOTH, expand=1)
-
-        # scrollbar = ttk.Scrollbar(main_frame, orient=VERTICAL, command=canvas.yview)
-        # scrollbar.pack(side=RIGHT, fill=Y)
-
-        # canvas.configure(yscrollcommand=scrollbar.set)
-        # canvas.bind('<Configure>', lambda e: canvas.configure(scrollregion = canvas.bbox('all')) )
-
-        # second_frame = Frame(canvas)
-
-        # canvas.create_window((0,0), window=second_frame, anchor='nw' )
-
         # CODE FOR THIS PAGE
 
         self.data = {}
         self.height = 0
         self.width = 0
+
+        # Scrolling code start
+        scroll = ScrollableFrame(self)
+        scroll.pack(fill='both', expand=1)
+        view = scroll.scrollable_frame
+        # Scrolling code end
 
         filetypes = (
             ('PNG, JPEG files', '*.PNG *.JPEG'),
