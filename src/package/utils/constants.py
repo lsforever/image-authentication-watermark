@@ -1,3 +1,5 @@
+COPYRIGHT_TEXT = "2022 @c"
+
 ORIGINAL_IMAGE_PATH = "original_image_path"
 WATERMARK_IMAGE_PATH = "watermark_image_path"
 

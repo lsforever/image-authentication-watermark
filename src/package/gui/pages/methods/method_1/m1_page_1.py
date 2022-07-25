@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 from tkinter import filedialog
+from turtle import width
 from src.package.utils.constants import *
 from src.package.utils.scrollable_frame import ScrollableFrame
 
@@ -25,9 +26,12 @@ class M1_Page_1(tk.Frame):
 
         # Scrolling code start
         scroll = ScrollableFrame(self)
-        scroll.pack(fill='both', expand=1)
+        scroll.pack(fill='both', expand=True)
+        #scroll.pack(fill='both', expand=1)
         view = scroll.scrollable_frame
         # Scrolling code end
+
+        
 
         filetypes = (
             ('PNG, JPEG files', '*.PNG *.JPEG'),
@@ -56,7 +60,7 @@ class M1_Page_1(tk.Frame):
             set_images()
 
         def resizeImage(img):
-            max_image_show_size = 300
+            max_image_show_size = 200
             w, h = img.size
             if h > max_image_show_size:
                 img.thumbnail(
@@ -131,63 +135,127 @@ class M1_Page_1(tk.Frame):
                     message='Select Images and Encryption key before continuing.')
 
         # UI basic part -------------------------------------------------------------------------------------------------------
+        
+        lf1 = ttk.LabelFrame(view, text='DWT level 1')
+        lf2 = ttk.LabelFrame(view, text='Image Selection')
+        lf3 = ttk.LabelFrame(view, text='Key Selection')
+        lf4 = ttk.LabelFrame(view, text='Navigate')
+        
+        lf6 = ttk.LabelFrame(lf2, text='Original Image')
+        lf7 = ttk.LabelFrame(lf2, text='Watermark Image')
+        view.columnconfigure(0, weight=1)
+        view.rowconfigure(4, weight=1)
+        lf1.grid(column=0, row=0, padx=10, pady=10, sticky = E+W)
+        lf2.grid(column=0, row=1, padx=10, pady=10, sticky = E+W)
+        lf3.grid(column=0, row=2, padx=10, pady=10, sticky = E+W)
+        lf4.grid(column=0, row=3, padx=10, pady=10, sticky = E+W)
+        
+        
+        
+        
 
-        img1 = ttk.Label(view, image=None)
-        img2 = ttk.Label(view, image=None)
+        img1 = ttk.Label(lf6, image=None)
+        img2 = ttk.Label(lf7, image=None)
 
         l1 = ttk.Label(
-            view, text="Image Authention Using watermark", font=('Times', '15'))
+            lf1, text="Image Authention Using watermark")
         l2 = ttk.Label(
-            view, text="Level 1 DWT(Discrete Wawelet Transformation with 'haar' algorithm", font=('Times', '10'))
+            lf1, text="Level 1 DWT(Discrete Wawelet Transformation with 'haar' algorithm")
         l3 = ttk.Label(
-            view, text="Alpha bleding embeding algorithm", font=('Times', '10'))
-        l4 = ttk.Label(view, text="Gray Scale (Better for psnr)",
-                       font=('Times', '10'))
-        l5 = ttk.Label(view, text="Uses Encryption", font=('Times', '10'))
+            lf1, text="Alpha bleding embeding algorithm")
+        l4 = ttk.Label(lf1, text="Gray Scale (Better for psnr)")
+        l5 = ttk.Label(lf1, text="Uses Encryption")
 
         l6 = ttk.Label(
-            view, text="Choose your image and watermark image below\n(Select same size images for testing psnr ratios. Or else images will be cropped)")
+            lf2, text="Choose your image and watermark image below\n(Select same size images for testing psnr ratios. Or else images will be cropped)")
         l7 = ttk.Label(
-            view, text="Not selected")
+            lf6, text="n/a")
         l8 = ttk.Label(
-            view, text="Not selected")
-        l9 = ttk.Label(view, text="Enter your encryption key")
-        l10 = ttk.Label(view, text="Generate a new encryption key")
+            lf7, text="n/a")
+        l11 = ttk.Label(
+            lf6, text="Path :")
+        l12 = ttk.Label(
+            lf7, text="Path :")
+        
+        lf6.bind("<Configure>",lambda e: 
+            l7.configure(wraplength= e.width -60)
+        )
+        lf7.bind("<Configure>",lambda e: 
+            l8.configure(wraplength= e.width -60)
+        )
+        
+        
+        
+        l9 = ttk.Label(lf3, text="Enter your encryption key")
+        l10 = ttk.Label(lf3, text="Generate a new encryption key")
 
-        b1 = ttk.Button(view, text="Use Defualt Images",
+        b1 = ttk.Button(lf2, text="Use Defualt Images",
                         command=default_img)
-        b2 = ttk.Button(view, text="Choose Original Image",
+        b2 = ttk.Button(lf6, text="Choose Original Image",
                         command=choose_original)
-        b3 = ttk.Button(view, text="Choose Watermark Image",
+        b3 = ttk.Button(lf7, text="Choose Watermark Image",
                         command=choose_watermark)
-        b4 = ttk.Button(view, text="Generate New Encryption Key",
+        
+        b4 = ttk.Button(lf3, text="Generate New Encryption Key",
                         command=generate_enc)
-        b5 = ttk.Button(view, text="Back",
+        
+        b5 = ttk.Button(lf4, text="Back",
                         command=back)
-        b6 = ttk.Button(view, text="Next",
+        b6 = ttk.Button(lf4, text="Next",
                         command=next)
+        cc = ttk.Label(view, text = COPYRIGHT_TEXT)
 
-        view.columnconfigure(0, weight=1)
-        view.rowconfigure(0, weight=0)
+        
+        # DWT
+        l1.grid(row=0, column=0, sticky=W, pady=(8, 12), padx=10)
+        l2.grid(row=1, column=0, sticky=W, pady=0, padx=10)
+        l3.grid(row=2, column=0, sticky=W, pady=0, padx=10)
+        l4.grid(row=3, column=0, sticky=W, pady=0, padx=10)
+        l5.grid(row=4, column=0, sticky=W, pady=(2, 10), padx=10)
 
-        l1.grid(row=0, column=0, sticky=W, pady=(2, 10), padx=5)
-        l2.grid(row=1, column=0, sticky=W, pady=0, padx=5)
-        l3.grid(row=2, column=0, sticky=W, pady=0, padx=5)
-        l4.grid(row=3, column=0, sticky=W, pady=0, padx=5)
-        l5.grid(row=4, column=0, sticky=W, pady=0, padx=5)
-
-        l6.grid(row=5, column=0, sticky=W, pady=(20, 2), padx=5)
-        l7.grid(row=6, column=0, sticky=W, pady=2, padx=5)
-        l8.grid(row=7, column=0, sticky=W, pady=2, padx=5)
-        l9.grid(row=8, column=0, sticky=W, pady=2, padx=5)
-        l10.grid(row=9, column=0, sticky=W, pady=2, padx=5)
-
-        b1.grid(row=10, column=0, sticky=W, pady=2, padx=5)
-        b2.grid(row=11, column=0, sticky=W, pady=2, padx=5)
-        b3.grid(row=12, column=0, sticky=W, pady=2, padx=5)
-        b4.grid(row=13, column=0, sticky=W, pady=2, padx=5)
-        b5.grid(row=14, column=0, sticky=W, pady=2, padx=5)
-        b6.grid(row=15, column=0, sticky=W, pady=2, padx=5)
-
-        img1.grid(row=16, column=0, sticky=W, pady=2, padx=5)
-        img2.grid(row=17, column=0, sticky=W, pady=2, padx=5)
+        # image
+        l6.grid(row=0, column=0, columnspan=2, sticky=W, pady=(20, 2), padx=10)
+        
+        l11.grid(row=0, column=0, sticky=W, pady=2, padx=5)
+        l7.grid(row=0, column=1, sticky=W, pady=2, padx=5)
+        b2.grid(row=1, column=0, columnspan=2, sticky=W, pady=2, padx=5)
+        img1.grid(row=2, column=0, columnspan=2, sticky=W, pady=2, padx=5)
+        
+        l12.grid(row=0, column=0, sticky=W, pady=2, padx=5)
+        l8.grid(row=0, column=1, sticky=W, pady=2, padx=5)
+        b3.grid(row=1, column=0, columnspan=2, sticky=W, pady=2, padx=5)
+        img2.grid(row=2, column=0, columnspan=2, sticky=W, pady=2, padx=5)
+        
+        lf6.grid(column=0, row=1, padx=10, pady=10, sticky = E+W)
+        lf7.grid(column=1, row=1, padx=10, pady=10, sticky = E+W)
+        
+        b1.grid(row=2, column=0, columnspan=2, sticky=E, pady=(2,8), padx=10)
+        
+        
+        lf2.rowconfigure(3, weight=1)
+        lf2.rowconfigure(6, weight=1)
+        
+        
+        # enc
+        l9.grid(row=0, column=0, sticky=W, pady=2, padx=5)
+        l10.grid(row=1, column=0, sticky=W, pady=2, padx=5)
+        b4.grid(row=2, column=0, sticky=W, pady=2, padx=5)
+        
+        # Nav
+        b5.grid(row=0, column=0, sticky=W, pady=10, padx=10)
+        b6.grid(row=0, column=1, sticky=E, pady=10, padx=10)
+        
+        
+        cc.grid(row=4, column=0, sticky=E+S, pady=2, padx=10)
+        
+        
+        lf1.columnconfigure(1, weight=1)
+        
+        lf2.columnconfigure(0, weight=1)
+        lf2.columnconfigure(1, weight=1)
+        
+        lf3.columnconfigure(1, weight=1)
+        lf4.columnconfigure(1, weight=1)
+        
+        
+        
