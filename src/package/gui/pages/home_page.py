@@ -4,9 +4,10 @@ from tkinter import ttk
 from src.package.utils.constants import COPYRIGHT_TEXT
 from src.package.gui.pages.methods.methods_list import methods_list
 from PIL import Image, ImageTk
-
+import copy
 
 # ---------------------------------------- HOME PAGE FRAME / CONTAINER ------------------------------------------------------------------------
+
 
 class HomePage(ttk.Frame):
     def __init__(self, parent, container):
@@ -57,27 +58,16 @@ class HomePage(ttk.Frame):
         l3.grid(row=4, column=0, columnspan=2, sticky=E+S, pady=2, padx=10)
 
         self.a1 = Image.open('src/package/resources/img/bg_images/luffy.jpeg')
-
-        self.a2 = self.a1
-        self.a2.thumbnail((3000, 3000), Image.ANTIALIAS)
-        self.img = ImageTk.PhotoImage(self.a2)
+        self.a1.thumbnail((470, 470), Image.ANTIALIAS)
+        self.img = ImageTk.PhotoImage(self.a1)
         self.l4 = ttk.Label(lf, image=self.img)
         self.l4.grid(row=3, column=0, columnspan=2, pady=10, padx=10)
 
-        lf.bind("<Configure>", self.resize_image)
+        # lf.bind("<Configure>", self.resize_image)
 
-    def resize_image(self, event):
-        self.a2 = self.a1
-        self.a2.thumbnail((1000, 1000), Image.ANTIALIAS)
-        self.img = ImageTk.PhotoImage(self.a2)
-        print(str(self.a2.size) + ' ||| ' +
-              str(event.width)+' x ' + str(event.height))
-        self.l4.configure(image=self.img)
-
-        # basewidth = event.width
-        # self.a2 =self.a1
-        # wpercent = (basewidth/float(self.a2.size[0]))
-        # hsize = int((float(self.a2.size[1])*float(wpercent)))
-        # self.a2 = self.a2.resize((basewidth,hsize), Image.ANTIALIAS)
-        # self.img = ImageTk.PhotoImage(self.a2)
-        # self.l4.configure(image=self.img)
+    # def resize_image(self, event):
+    #     w =event.width
+    #     self.a2 = copy.deepcopy(self.a1)
+    #     self.a2.thumbnail((w, w), Image.ANTIALIAS)
+    #     self.img = ImageTk.PhotoImage(self.a2)
+    #     self.l4.configure(image=self.img)

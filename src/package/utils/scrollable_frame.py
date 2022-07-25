@@ -27,12 +27,22 @@ class ScrollableFrame(ttk.Frame):
 
         # This one does the trick for keeping canvas_frame width height expanding
         self.canvas.bind( "<Configure>", self.adjust_size)
+        #self.scrollable_frame.bind( "<Configure>", self.adjust_size)
+        self.flag =False
+        self.flag_size = 0
+        
     
     # This one does the trick for keeping canvas_frame width height expanding   
     def adjust_size(self,event):
-        # if event.width > self.scrollable_frame.winfo_width():
-        #     self.canvas.itemconfig(self.canvas_frame, width=event.width)
-        
         self.canvas.itemconfig(self.canvas_frame, width=event.width)
+
         if event.height > self.scrollable_frame.winfo_height():
             self.canvas.itemconfig(self.canvas_frame, height=event.height)
+        else:
+            self.canvas.itemconfig(self.canvas_frame, height=-1)
+
+
+        
+        
+        
+
