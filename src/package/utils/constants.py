@@ -1,3 +1,8 @@
+# CONSTANTS
+
+# change location of this if the app is serious lol lmfao
+SALT = b'\x0cD\xb7O\xdb\x00>E?\xa8{\xd3\xaf1A\xf3\x93\x07"\x16H\n\xe1bp\xe5\xad^\x026\xe0\xef'
+
 COPYRIGHT_TEXT = "2022 @c"
 
 ORIGINAL_IMAGE_PATH = "original_image_path"

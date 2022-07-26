@@ -57,11 +57,13 @@ class HomePage(ttk.Frame):
         b1.grid(row=2, column=0, columnspan=2,  pady=10, padx=10)
         l3.grid(row=4, column=0, columnspan=2, sticky=E+S, pady=2, padx=10)
 
-        self.a1 = Image.open('src/package/resources/img/bg_images/luffy.jpeg')
-        self.a1.thumbnail((470, 470), Image.ANTIALIAS)
-        self.img = ImageTk.PhotoImage(self.a1)
-        self.l4 = ttk.Label(lf, image=self.img)
-        self.l4.grid(row=3, column=0, columnspan=2, pady=10, padx=10)
+        # self.a1 = Image.open('src/package/resources/img/bg_images/luffy.jpeg')
+        # self.a1.thumbnail((470, 470), Image.ANTIALIAS)
+        # self.img = ImageTk.PhotoImage(self.a1)
+        # self.l4 = ttk.Label(lf, image=self.img)
+        # self.l4.grid(row=3, column=0, columnspan=2, pady=10, padx=10)
+
+
 
         # lf.bind("<Configure>", self.resize_image)
 

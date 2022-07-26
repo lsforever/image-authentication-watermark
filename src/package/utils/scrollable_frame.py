@@ -46,3 +46,16 @@ class ScrollableFrame(ttk.Frame):
         
         
 
+# self.scrollframe.bind('<Enter>', self._bound_to_mousewheel)
+#     self.scrollframe.bind('<Leave>', self._unbound_to_mousewheel)
+
+#     return None
+
+# def _bound_to_mousewheel(self, event):
+#     self.canv.bind_all("<MouseWheel>", self._on_mousewheel)
+
+# def _unbound_to_mousewheel(self, event):
+#     self.canv.unbind_all("<MouseWheel>")
+
+# def _on_mousewheel(self, event):
+#     self.canv.yview_scroll(int(-1*(event.delta/120)), "units")

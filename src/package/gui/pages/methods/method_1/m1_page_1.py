@@ -136,8 +136,7 @@ class M1_Page_1(tk.Frame):
 
         lf1 = ttk.LabelFrame(view, text='DWT level 1')
         lf2 = ttk.LabelFrame(view, text='Image Selection')
-        lf3 = ttk.LabelFrame(view, text='Key Selection')
-        lf4 = ttk.LabelFrame(view, text='Navigate')
+        lf3 = ttk.LabelFrame(view, text='Navigate')
 
         lf6 = ttk.LabelFrame(lf2, text='Original Image')
         lf7 = ttk.LabelFrame(lf2, text='Watermark Image')
@@ -145,8 +144,7 @@ class M1_Page_1(tk.Frame):
         view.rowconfigure(4, weight=1)
         lf1.grid(column=0, row=0, padx=10, pady=10, sticky=E+W)
         lf2.grid(column=0, row=1, padx=10, pady=10, sticky=E+W)
-        lf3.grid(column=0, row=2, padx=10, pady=10, sticky=E+W)
-        lf4.grid(column=0, row=3, padx=10, pady=10, sticky=E+W)
+        lf3.grid(column=0, row=3, padx=10, pady=10, sticky=E+W)
 
         img1 = ttk.Label(lf6, image=None)
         img2 = ttk.Label(lf7, image=None)
@@ -157,8 +155,8 @@ class M1_Page_1(tk.Frame):
             lf1, text="Level 1 DWT(Discrete Wawelet Transformation with 'haar' algorithm")
         l3 = ttk.Label(
             lf1, text="Alpha bleding embeding algorithm")
-        l4 = ttk.Label(lf1, text="Gray Scale (Better for psnr)")
-        l5 = ttk.Label(lf1, text="Uses Encryption")
+        l4 = ttk.Label(lf1, text="Gray scale")
+        l5 = ttk.Label(lf1, text="Same size")
 
         l6 = ttk.Label(
             lf2, text="Choose your image and watermark image below\n(Select same size images for testing psnr ratios. Or else images will be cropped)")
@@ -166,9 +164,9 @@ class M1_Page_1(tk.Frame):
             lf6, text="n/a")
         l8 = ttk.Label(
             lf7, text="n/a")
-        l11 = ttk.Label(
+        l9 = ttk.Label(
             lf6, text="Path :")
-        l12 = ttk.Label(
+        l10 = ttk.Label(
             lf7, text="Path :")
 
         lf6.bind("<Configure>", lambda e:
@@ -178,22 +176,15 @@ class M1_Page_1(tk.Frame):
                  l8.configure(wraplength=e.width - 60)
                  )
 
-        l9 = ttk.Label(lf3, text="Enter your encryption key")
-        l10 = ttk.Label(lf3, text="Generate a new encryption key")
-
         b1 = ttk.Button(lf2, text="Use Defualt Images",
                         command=default_img)
         b2 = ttk.Button(lf6, text="Choose Original Image",
                         command=choose_original)
         b3 = ttk.Button(lf7, text="Choose Watermark Image",
                         command=choose_watermark)
-
-        b4 = ttk.Button(lf3, text="Generate New Encryption Key",
-                        command=generate_enc)
-
-        b5 = ttk.Button(lf4, text="Back",
+        b4 = ttk.Button(lf3, text="Back",
                         command=back)
-        b6 = ttk.Button(lf4, text="Next",
+        b5 = ttk.Button(lf3, text="Next",
                         command=next)
         cc = ttk.Label(view, text=COPYRIGHT_TEXT)
 
@@ -207,12 +198,12 @@ class M1_Page_1(tk.Frame):
         # image
         l6.grid(row=0, column=0, columnspan=2, sticky=W, pady=(20, 2), padx=10)
 
-        l11.grid(row=0, column=0, sticky=W, pady=2, padx=5)
+        l9.grid(row=0, column=0, sticky=W, pady=2, padx=5)
         l7.grid(row=0, column=1, sticky=W, pady=2, padx=5)
         b2.grid(row=1, column=0, columnspan=2, sticky=W, pady=2, padx=5)
         img1.grid(row=2, column=0, columnspan=2, sticky=W, pady=2, padx=5)
 
-        l12.grid(row=0, column=0, sticky=W, pady=2, padx=5)
+        l10.grid(row=0, column=0, sticky=W, pady=2, padx=5)
         l8.grid(row=0, column=1, sticky=W, pady=2, padx=5)
         b3.grid(row=1, column=0, columnspan=2, sticky=W, pady=2, padx=5)
         img2.grid(row=2, column=0, columnspan=2, sticky=W, pady=2, padx=5)
@@ -225,14 +216,9 @@ class M1_Page_1(tk.Frame):
         lf2.rowconfigure(3, weight=1)
         lf2.rowconfigure(6, weight=1)
 
-        # enc
-        l9.grid(row=0, column=0, sticky=W, pady=2, padx=5)
-        l10.grid(row=1, column=0, sticky=W, pady=2, padx=5)
-        b4.grid(row=2, column=0, sticky=W, pady=2, padx=5)
-
         # Nav
-        b5.grid(row=0, column=0, sticky=W, pady=10, padx=10)
-        b6.grid(row=0, column=1, sticky=E, pady=10, padx=10)
+        b4.grid(row=0, column=0, sticky=W, pady=10, padx=10)
+        b5.grid(row=0, column=1, sticky=E, pady=10, padx=10)
 
         cc.grid(row=4, column=0, sticky=E+S, pady=2, padx=10)
 
@@ -242,4 +228,3 @@ class M1_Page_1(tk.Frame):
         lf2.columnconfigure(1, weight=1)
 
         lf3.columnconfigure(1, weight=1)
-        lf4.columnconfigure(1, weight=1)
