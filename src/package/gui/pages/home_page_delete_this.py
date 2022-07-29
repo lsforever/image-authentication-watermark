@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import *
-import src.package.gui.extentions as U
+import package.utils.extentions as U
 from src.package.domain.embed import *
 from PIL import Image, ImageTk
 

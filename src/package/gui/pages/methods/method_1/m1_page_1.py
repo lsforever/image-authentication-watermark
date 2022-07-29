@@ -106,7 +106,7 @@ class M1_Page_1(tk.Frame):
                 self.data[ORIGINAL_IMAGE_GRAY_ARRAY] = cv2.cvtColor(
                     a1, cv2.COLOR_BGR2GRAY)
                 self.data[WATERMARK_IMAGE_GRAY_ARRAY] = cv2.cvtColor(
-                    a2, cv2.COLOR_BGR2RGB)
+                    a2, cv2.COLOR_BGR2GRAY)
 
             elif a1:
                 resizeImage(a1)
@@ -117,20 +117,16 @@ class M1_Page_1(tk.Frame):
                 self.data[WATERMARK_IMAGE] = ImageTk.PhotoImage(a2)
                 img2.configure(image=self.data[WATERMARK_IMAGE])
 
-        def generate_enc():
-            pass
-
         def back():
             parent.show_frame(parent.HomePage)
 
         def next():
-            # TODO check rquirements before next ///// encrpt add //// and (ENCRYPTION_KEY in data)
             if (ORIGINAL_IMAGE_PATH in self.data) and (WATERMARK_IMAGE_PATH in self.data) and (ORIGINAL_IMAGE_GRAY_ARRAY in self.data) and (WATERMARK_IMAGE_GRAY_ARRAY in self.data):
                 parent.show_m1_frame(parent.M1_Page_2, data=self.data)
             else:
                 showinfo(
                     title='Incomplete',
-                    message='Select Images and Encryption key before continuing.')
+                    message='Select Images before continuing.')
 
         # UI basic part -------------------------------------------------------------------------------------------------------
 
@@ -141,10 +137,10 @@ class M1_Page_1(tk.Frame):
         lf6 = ttk.LabelFrame(lf2, text='Original Image')
         lf7 = ttk.LabelFrame(lf2, text='Watermark Image')
         view.columnconfigure(0, weight=1)
-        view.rowconfigure(4, weight=1)
+        view.rowconfigure(3, weight=1)
         lf1.grid(column=0, row=0, padx=10, pady=10, sticky=E+W)
         lf2.grid(column=0, row=1, padx=10, pady=10, sticky=E+W)
-        lf3.grid(column=0, row=3, padx=10, pady=10, sticky=E+W)
+        lf3.grid(column=0, row=3, padx=10, pady=10, sticky=E+W+S)
 
         img1 = ttk.Label(lf6, image=None)
         img2 = ttk.Label(lf7, image=None)
@@ -186,7 +182,7 @@ class M1_Page_1(tk.Frame):
                         command=back)
         b5 = ttk.Button(lf3, text="Next",
                         command=next)
-        cc = ttk.Label(view, text=COPYRIGHT_TEXT)
+        # cc = ttk.Label(view, text=COPYRIGHT_TEXT)
 
         # DWT
         l1.grid(row=0, column=0, sticky=W, pady=(8, 12), padx=10)
@@ -220,7 +216,7 @@ class M1_Page_1(tk.Frame):
         b4.grid(row=0, column=0, sticky=W, pady=10, padx=10)
         b5.grid(row=0, column=1, sticky=E, pady=10, padx=10)
 
-        cc.grid(row=4, column=0, sticky=E+S, pady=2, padx=10)
+        #cc.grid(row=4, column=0, sticky=E+S, pady=2, padx=10)
 
         lf1.columnconfigure(1, weight=1)
 

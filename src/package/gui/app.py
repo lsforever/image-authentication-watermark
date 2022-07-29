@@ -3,7 +3,7 @@ from tkinter import *
 from tkinter import ttk
 # TODO add ttk widgets to this one
 
-import src.package.gui.extentions as U
+import src.package.utils.extentions as U
 #import extentions as U
 
 #import pages

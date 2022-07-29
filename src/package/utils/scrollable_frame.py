@@ -26,25 +26,25 @@ class ScrollableFrame(ttk.Frame):
         scrollbar.pack(side="right", fill="y")
 
         # This one does the trick for keeping canvas_frame width height expanding
-        self.canvas.bind( "<Configure>", self.adjust_size)
+        self.canvas.bind("<Configure>", self.adjust_size)
+
         #self.scrollable_frame.bind( "<Configure>", self.adjust_size)
-        self.flag =False
+        self.flag = False
         self.flag_size = 0
-        
-    
-    # This one does the trick for keeping canvas_frame width height expanding   
-    def adjust_size(self,event):
+
+    # This one does the trick for keeping canvas_frame width height expanding
+
+    def adjust_size(self, event):
         self.canvas.itemconfig(self.canvas_frame, width=event.width)
 
-        if event.height > self.scrollable_frame.winfo_height():
-            self.canvas.itemconfig(self.canvas_frame, height=event.height)
-        else:
-            self.canvas.itemconfig(self.canvas_frame, height=-1)
+        # if event.height > self.scrollable_frame.winfo_height():
+        #     self.flag = True
+        #     self.canvas.itemconfig(self.canvas_frame, height=event.height)
+        # else:
+        #     if self.flag == True:
+        #         self.flag = False
+                #self.canvas.itemconfig(self.canvas_frame, height=-1)
 
-
-        
-        
-        
 
 # self.scrollframe.bind('<Enter>', self._bound_to_mousewheel)
 #     self.scrollframe.bind('<Leave>', self._unbound_to_mousewheel)
