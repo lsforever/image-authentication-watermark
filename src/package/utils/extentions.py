@@ -12,3 +12,12 @@ def get_resize_shape_with_aspect_ratio(size, max_size):
     width = max_size
     height = int(r * width)
     return (width,height)
+
+def get_dpi():
+    screen = Tk()
+    current_dpi = screen.winfo_fpixels('1i')
+    screen.destroy()
+    return current_dpi
+
+def show_imag_histogram_dialog():
+    pass #TODO

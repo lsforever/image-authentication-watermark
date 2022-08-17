@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 from tkinter import filedialog
-from turtle import width
+import copy
 from src.package.utils.constants import *
 from src.package.utils.scrollable_frame import ScrollableFrame
 
@@ -101,8 +101,11 @@ class M1_Page_1(tk.Frame):
 
                 a1 = cv2.imread(self.data[ORIGINAL_IMAGE_PATH])
                 a2 = cv2.imread(self.data[WATERMARK_IMAGE_PATH])
-                a1 = a1[0:self.height, 0:self.width]
-                a2 = a2[0:self.height, 0:self.width]
+                # a1 = a1[0:self.height, 0:self.width]
+                # a2 = a2[0:self.height, 0:self.width]
+                #TODO
+                a1 = a1[0:self.width, 0:self.height] # TODO change squre crop here, shown in page 2
+                a2 = a2[0:self.width, 0:self.height]
                 self.data[ORIGINAL_IMAGE_GRAY_ARRAY] = cv2.cvtColor(
                     a1, cv2.COLOR_BGR2GRAY)
                 self.data[WATERMARK_IMAGE_GRAY_ARRAY] = cv2.cvtColor(
@@ -122,7 +125,20 @@ class M1_Page_1(tk.Frame):
 
         def next():
             if (ORIGINAL_IMAGE_PATH in self.data) and (WATERMARK_IMAGE_PATH in self.data) and (ORIGINAL_IMAGE_GRAY_ARRAY in self.data) and (WATERMARK_IMAGE_GRAY_ARRAY in self.data):
-                parent.show_m1_frame(parent.M1_Page_2, data=self.data)
+                
+                # if isinstance(self.data[ALPHA_BLEND_K].get(), float) and isinstance(self.data[ALPHA_BLEND_K].get(), float):
+                if isinstance(lfk.getvar(name=ALPHA_BLEND_K), float) and isinstance(lfk.getvar(name=ALPHA_BLEND_Q), float):
+                    self.data[ALPHA_BLEND_K] = copy.copy(
+                       self.data[ALPHA_BLEND_K].get())
+                    self.data[ALPHA_BLEND_Q] = copy.copy(
+                       self.data[ALPHA_BLEND_Q].get())
+                    parent.show_m1_frame(parent.M1_Page_2, data=self.data)
+                else:
+                    showinfo(
+                        title='Invalid',
+                        message='k and q values should be valid numbers')
+                    reset_kq()
+
             else:
                 showinfo(
                     title='Incomplete',
@@ -133,14 +149,16 @@ class M1_Page_1(tk.Frame):
         lf1 = ttk.LabelFrame(view, text='DWT level 1')
         lf2 = ttk.LabelFrame(view, text='Image Selection')
         lf3 = ttk.LabelFrame(view, text='Navigate')
+        lfk = ttk.LabelFrame(view, text='Select Constants')
 
         lf6 = ttk.LabelFrame(lf2, text='Original Image')
         lf7 = ttk.LabelFrame(lf2, text='Watermark Image')
         view.columnconfigure(0, weight=1)
-        view.rowconfigure(3, weight=1)
+        view.rowconfigure(4, weight=1)
         lf1.grid(column=0, row=0, padx=10, pady=10, sticky=E+W)
         lf2.grid(column=0, row=1, padx=10, pady=10, sticky=E+W)
-        lf3.grid(column=0, row=3, padx=10, pady=10, sticky=E+W+S)
+        lfk.grid(column=0, row=3, padx=10, pady=10, sticky=E+W)
+        lf3.grid(column=0, row=4, padx=10, pady=10, sticky=E+W+S)
 
         img1 = ttk.Label(lf6, image=None)
         img2 = ttk.Label(lf7, image=None)
@@ -183,6 +201,37 @@ class M1_Page_1(tk.Frame):
         b5 = ttk.Button(lf3, text="Next",
                         command=next)
         # cc = ttk.Label(view, text=COPYRIGHT_TEXT)
+
+        self.data[ALPHA_BLEND_K] = tk.DoubleVar(
+            lfk, copy.copy(ALPHA_BLEND_DEFAULT_K), ALPHA_BLEND_K)
+        self.data[ALPHA_BLEND_Q] = tk.DoubleVar(
+            lfk, copy.copy(ALPHA_BLEND_DEFAULT_Q), ALPHA_BLEND_Q)
+
+        l_kq = ttk.Label(
+            lfk, text="Enter values for k and q constants for alpha blending algorithm below.")
+        l_k = ttk.Label(lfk, text="Enter k constant :")
+        l_q = ttk.Label(lfk, text="Enter q constant :")
+        entry_k = ttk.Entry(
+            lfk, width=20, textvariable=self.data[ALPHA_BLEND_K])
+        entry_q = ttk.Entry(
+            lfk, width=20, textvariable=self.data[ALPHA_BLEND_Q])
+
+        def reset_kq():
+            self.data[ALPHA_BLEND_K].set(copy.copy(ALPHA_BLEND_DEFAULT_K))
+            self.data[ALPHA_BLEND_Q].set(copy.copy(ALPHA_BLEND_DEFAULT_Q))
+
+        b_kq = ttk.Button(lfk, text="Reset to Default",
+                          command=reset_kq)
+
+        # constants
+        l_kq.grid(row=0, column=0, columnspan=2, sticky=W, pady=2, padx=5)
+        l_k.grid(row=1, column=0, sticky=W, pady=2, padx=5)
+        l_q.grid(row=1, column=1, sticky=W, pady=2, padx=5)
+        entry_k.grid(row=2, column=0, sticky=W, pady=2, padx=5)
+        entry_q.grid(row=2, column=1, sticky=W, pady=2, padx=5)
+        b_kq.grid(row=3, column=1, columnspan=2, sticky=E, pady=2, padx=5)
+        lfk.columnconfigure(0, weight=1)
+        lfk.columnconfigure(1, weight=1)
 
         # DWT
         l1.grid(row=0, column=0, sticky=W, pady=(8, 12), padx=10)

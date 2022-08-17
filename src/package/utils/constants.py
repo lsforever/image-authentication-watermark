@@ -19,5 +19,9 @@ WATERMARK_IMAGE_GRAY_ARRAY = "watermark_image_gray_array"
 
 ENCRYPTION_KEY = "encryption_key"
 
+ALPHA_BLEND_DEFAULT_K = 0.99
+ALPHA_BLEND_DEFAULT_Q = 0.009
 
+ALPHA_BLEND_K = "alpha_blend_k"
+ALPHA_BLEND_Q = "alpha_blend_q"
 
