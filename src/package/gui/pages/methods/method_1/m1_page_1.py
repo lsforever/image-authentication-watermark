@@ -103,8 +103,9 @@ class M1_Page_1(tk.Frame):
                 a2 = cv2.imread(self.data[WATERMARK_IMAGE_PATH])
                 # a1 = a1[0:self.height, 0:self.width]
                 # a2 = a2[0:self.height, 0:self.width]
-                #TODO
-                a1 = a1[0:self.width, 0:self.height] # TODO change squre crop here, shown in page 2
+                # TODO
+                # TODO change squre crop here, shown in page 2
+                a1 = a1[0:self.width, 0:self.height]
                 a2 = a2[0:self.width, 0:self.height]
                 self.data[ORIGINAL_IMAGE_GRAY_ARRAY] = cv2.cvtColor(
                     a1, cv2.COLOR_BGR2GRAY)
@@ -125,9 +126,10 @@ class M1_Page_1(tk.Frame):
 
         def next():
             if (ORIGINAL_IMAGE_PATH in self.data) and (WATERMARK_IMAGE_PATH in self.data) and (ORIGINAL_IMAGE_GRAY_ARRAY in self.data) and (WATERMARK_IMAGE_GRAY_ARRAY in self.data):
-                
+
                 # if isinstance(self.data[ALPHA_BLEND_K].get(), float) and isinstance(self.data[ALPHA_BLEND_K].get(), float):
-                if isinstance(lfk.getvar(name=ALPHA_BLEND_K), float) and isinstance(lfk.getvar(name=ALPHA_BLEND_Q), float):
+                # if isinstance(lfk.getvar(name=ALPHA_BLEND_K), float) and isinstance(lfk.getvar(name=ALPHA_BLEND_Q), float):
+                if isinstance(self.data[ALPHA_BLEND_K].get(), float) and isinstance(self.data[ALPHA_BLEND_K].get(), float):
                     # self.data[ALPHA_BLEND_K] = copy.copy(
                     #    self.data[ALPHA_BLEND_K].get())
                     # self.data[ALPHA_BLEND_Q] = copy.copy(

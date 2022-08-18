@@ -16,6 +16,8 @@ WATERMARK_IMAGE = "watermark_image"
 
 ORIGINAL_IMAGE_GRAY_ARRAY = "original_image_gray_array"
 WATERMARK_IMAGE_GRAY_ARRAY = "watermark_image_gray_array"
+WATERMARKED_IMAGE_GRAY_ARRAY = "watermarked_image_gray_array"
+
 
 ENCRYPTION_KEY = "encryption_key"
 

@@ -3,7 +3,8 @@ from tkinter import ttk
 from tkinter import *
 from PIL import Image, ImageTk
 import numpy as np
-import copy
+import cv2
+from tkinter import filedialog
 from src.package.domain.img_func import get_watermarked_img_with_info
 
 from src.package.utils.scrollable_frame import ScrollableFrame
@@ -34,8 +35,9 @@ class M1_Page_2(tk.Frame):
 
         # part details
         part_details = ttk.LabelFrame(view, text='Details')
-        l1 = ttk.Label(part_details, text="The gray scale watermark will be embeded to LL band of DWT coefficient of original image using alpha blend.").grid(
-            row=0, column=0, columnspan=2, padx=10, pady=10, sticky=W)
+        l1 = ttk.Label(
+            part_details, text="The gray scale watermark will be embeded to LL band of DWT coefficient of original image using alpha blend.")
+        l1.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky=W)
         part_details.bind("<Configure>", lambda e:
                           l1.configure(wraplength=e.width - 60)
                           )
@@ -118,21 +120,36 @@ class M1_Page_2(tk.Frame):
 
         LL, (LH, HL, HH) = dwt_info['main_image_dwt']
         mLL, (mLH, mHL, mHH) = dwt_info['mark_image_dwt']
-        
+
         main_coef_array = np.concatenate(
             (
-                np.concatenate((np.uint8(LL), np.uint8(LH)), axis=1),
+                np.concatenate((LL, np.uint8(LH)), axis=1),
                 np.concatenate((np.uint8(HL), np.uint8(HH)), axis=1),
             ),
             axis=0
         )
         mark_coef_array = np.concatenate(
             (
-                np.concatenate((np.uint8(mLL), np.uint8(mLH)), axis=1),
+                np.concatenate((mLL, np.uint8(mLH)), axis=1),
                 np.concatenate((np.uint8(mHL), np.uint8(mHH)), axis=1),
             ),
             axis=0
         )
+
+        # main_coef_array = np.concatenate(
+        #     (
+        #         np.concatenate((np.uint8(LL), np.uint8(LH)), axis=1),
+        #         np.concatenate((np.uint8(HL), np.uint8(HH)), axis=1),
+        #     ),
+        #     axis=0
+        # )
+        # mark_coef_array = np.concatenate(
+        #     (
+        #         np.concatenate((np.uint8(mLL), np.uint8(mLH)), axis=1),
+        #         np.concatenate((np.uint8(mHL), np.uint8(mHH)), axis=1),
+        #     ),
+        #     axis=0
+        # )
 
         # main_coef_array = np.concatenate(
         #     (
@@ -199,10 +216,18 @@ class M1_Page_2(tk.Frame):
         # blend
         part_blend = ttk.LabelFrame(view, text='Embeding (Alpha Blend)')
 
-        ttk.Label(part_blend, text="The watermark LL band will be embeded into original image LL band with k and q ratios and then the watermarked image will be created.").grid(
-            row=0, column=0, padx=10, pady=2, sticky=W)
-        ttk.Label(part_blend, text="Alpha blended LL band").grid(
-            row=1, column=0, padx=10, pady=2, sticky=W)
+        blend_LL = ttk.LabelFrame(
+            part_blend, text="Alpha blended LL band")
+        blend_final = ttk.LabelFrame(
+            part_blend, text="Water Marked Image")
+        blend_LL.grid(row=1, column=0, padx=10, pady=10, sticky=W+E+N)
+        blend_final.grid(row=1, column=1, padx=10, pady=10, sticky=W+E+N)
+        part_blend.columnconfigure(0, weight=1)
+        part_blend.columnconfigure(1, weight=1)
+
+        z4_l1 = ttk.Label(
+            part_blend, text="The watermark LL band will be embeded into original image LL band with k and q ratios and then the watermarked image will be created.")
+        z4_l1.grid(row=0, column=0, columnspan=2, padx=10, pady=2, sticky=W)
 
         marked_LL_img_a = Image.fromarray(dwt_info['marked_LL'])
         water_marked_img_a = Image.fromarray(
@@ -215,12 +240,30 @@ class M1_Page_2(tk.Frame):
         self.marked_LL_img_a_photo = ImageTk.PhotoImage(marked_LL_img_a)
         self.water_marked_img_a_photo = ImageTk.PhotoImage(water_marked_img_a)
 
-        ttk.Label(part_blend, image=self.marked_LL_img_a_photo).grid(
-            row=2, column=0, columnspan=2, padx=10, pady=2, sticky=W)
-        ttk.Label(part_blend, text="Water Marked Image").grid(
-            row=3, column=0, padx=10, pady=2, sticky=W)
-        ttk.Label(part_blend, image=self.water_marked_img_a_photo).grid(
-            row=4, column=0, columnspan=2, padx=10, pady=2, sticky=W)
+        ttk.Label(blend_LL, image=self.marked_LL_img_a_photo).grid(
+            row=0, column=0, padx=10, pady=2, sticky=W)
+        ttk.Button(blend_LL, text="View Histogram",
+                   command=lambda: show_gray_img_histogram_dialog(self, dwt_info['marked_LL'], 'Histogram of Watermark Image LL Band')).grid(
+            row=1, column=0, padx=10, pady=2, sticky=W)
+
+        ttk.Label(blend_final, image=self.water_marked_img_a_photo).grid(
+            row=0, column=0, padx=10, pady=2, sticky=W)
+        ttk.Button(blend_final, text="View Histogram",
+                   command=lambda: show_gray_img_histogram_dialog(self, dwt_info['water_marked_img_array'], 'Histogram of Watermark Image LL Band')).grid(
+            row=1, column=0, padx=10, pady=2, sticky=W)
+
+        def save_marked_image():
+            filename = filedialog.asksaveasfilename(
+                initialdir="/", title="Select Path", filetypes=(("png files", "*.png"), ("jpeg files", "*.jpg")))
+            #TODO extentions auto hedenna hadanna, if: time
+            cv2.imwrite(filename, dwt_info['water_marked_img_array'])
+
+        ttk.Button(blend_final, text="Save Watermarked Image", command=save_marked_image).grid(
+            row=2, column=0, padx=10, pady=2, sticky=W)
+        part_blend.bind("<Configure>", lambda e:
+                        z4_l1.configure(wraplength=e.width - 60)
+                        )
+        self.data[WATERMARKED_IMAGE_GRAY_ARRAY] = dwt_info['water_marked_img_array']
 
         # nav
         part_nav = ttk.LabelFrame(view, text='Navigate')
@@ -232,7 +275,7 @@ class M1_Page_2(tk.Frame):
             parent.show_m1_frame(parent.M1_Page_1)
 
         def next():
-            pass
+            parent.show_m1_frame(parent.M1_Page_3, data=self.data)
 
         b1 = ttk.Button(part_nav, text="Home",
                         command=home)

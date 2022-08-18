@@ -12,6 +12,7 @@ from src.package.gui.pages.validation_page import Validation
 
 from src.package.gui.pages.methods.method_1.m1_page_1 import M1_Page_1
 from src.package.gui.pages.methods.method_1.m1_page_2 import M1_Page_2
+from src.package.gui.pages.methods.method_1.m1_page_3 import M1_Page_3
 
 #TODO win.focus_set() remove button foucus if: time
 
@@ -42,6 +43,7 @@ class App(tk.Tk):
         self.m1_frames = {}
         self.M1_Page_1 = M1_Page_1
         self.M1_Page_2 = M1_Page_2
+        self.M1_Page_3 = M1_Page_3
 
         # Defining Frames and Packing it
         for F in {
@@ -57,6 +59,7 @@ class App(tk.Tk):
     def show_frame(self, cont):
         # TODO update here when new m1 methods are added.
         if cont == self.HomePage:
+            #TODO
             self.m1_frames ={}
         
         frame = self.frames[cont]
@@ -67,6 +70,7 @@ class App(tk.Tk):
 
     # method 1 frames
     def show_m1_frame(self, cont, data={}):
+        #TODO
         final = None
         if cont == self.M1_Page_1:
             if self.M1_Page_1 in self.m1_frames:
@@ -81,6 +85,12 @@ class App(tk.Tk):
             else:
                 final = self.M1_Page_2(self, self.container, data)
                 self.m1_frames[self.M1_Page_2] = final
+        elif cont == self.M1_Page_3:
+            if self.M1_Page_3 in self.m1_frames:
+                final = self.m1_frames[self.M1_Page_3]
+            else:
+                final = self.M1_Page_3(self, self.container, data)
+                self.m1_frames[self.M1_Page_3] = final
         else:
             return
         final.grid(row=0, column=0, sticky="nsew")
