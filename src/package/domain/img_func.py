@@ -7,7 +7,7 @@ from src.package.utils.constants import ALPHA_BLEND_DEFAULT_K,ALPHA_BLEND_DEFAUL
 
 # Image  functions for embeding and extraction
 
-def get_watermarked_img_with_info(main_image_gray_array, mark_image_gray_array, k=ALPHA_BLEND_DEFAULT_K, q=ALPHA_BLEND_DEFAULT_Q):
+def get_watermarked_img_with_info(main_image_gray_array, mark_image_gray_array, k=ALPHA_BLEND_DEFAULT_K, q=ALPHA_BLEND_DEFAULT_Q, n=1):
     main_image_dwt = pywt.dwt2(main_image_gray_array, 'haar')
     LL, (LH, HL, HH) = main_image_dwt
     mark_image_dwt = pywt.dwt2(mark_image_gray_array, 'haar')
@@ -17,14 +17,14 @@ def get_watermarked_img_with_info(main_image_gray_array, mark_image_gray_array, 
     marked_dwt = marked_LL, (LH, HL, HH)
     water_marked_img_array = pywt.idwt2(marked_dwt, 'haar')
     info = {}
-    info.main_image_dwt = main_image_dwt
-    info.mark = mark_image_dwt
-    info.marked_LL = marked_LL
-    info.water_marked_img_array = water_marked_img_array
+    info['main_image_dwt'] = main_image_dwt
+    info['mark_image_dwt'] = mark_image_dwt
+    info['marked_LL'] = marked_LL
+    info['water_marked_img_array'] = water_marked_img_array
     return info
 
 
-def get_extracted_mark_with_info(main_image_gray_array,water_marked_image_gray_array, k=ALPHA_BLEND_DEFAULT_K, q=ALPHA_BLEND_DEFAULT_Q):
+def get_extracted_mark_with_info(main_image_gray_array,water_marked_image_gray_array, k=ALPHA_BLEND_DEFAULT_K, q=ALPHA_BLEND_DEFAULT_Q, n=1):
     # use => np.array(water_marked_img) , if the watermarked image is not an array
     # dwt algorithm
     water_marked_img_dwt = pywt.dwt2(water_marked_image_gray_array, 'haar')
@@ -37,8 +37,10 @@ def get_extracted_mark_with_info(main_image_gray_array,water_marked_image_gray_a
     # Inverse dwt algorith
     extracted_watermark_array = pywt.idwt2(extracted_watermark_dwt, 'haar')
     info = {}
-    info.water_marked_img_dwt = water_marked_img_dwt
-    info.main_img_dwt = main_img_dwt
-    info.water_mark_coeficient_LL = water_mark_coeficient_LL
-    info.extracted_watermark_array = extracted_watermark_array
+    info['water_marked_img_dwt'] = water_marked_img_dwt
+    info['main_img_dwt'] = main_img_dwt
+    info['water_mark_coeficient_LL'] = water_mark_coeficient_LL
+    info['extracted_watermark_array'] = extracted_watermark_array
     return info
+
+

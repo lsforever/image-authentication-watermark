@@ -13,6 +13,7 @@ from src.package.gui.pages.validation_page import Validation
 from src.package.gui.pages.methods.method_1.m1_page_1 import M1_Page_1
 from src.package.gui.pages.methods.method_1.m1_page_2 import M1_Page_2
 
+#TODO win.focus_set() remove button foucus if: time
 
 class App(tk.Tk):
     def __init__(self):

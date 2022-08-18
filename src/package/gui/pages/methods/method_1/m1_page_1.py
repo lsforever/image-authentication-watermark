@@ -128,10 +128,10 @@ class M1_Page_1(tk.Frame):
                 
                 # if isinstance(self.data[ALPHA_BLEND_K].get(), float) and isinstance(self.data[ALPHA_BLEND_K].get(), float):
                 if isinstance(lfk.getvar(name=ALPHA_BLEND_K), float) and isinstance(lfk.getvar(name=ALPHA_BLEND_Q), float):
-                    self.data[ALPHA_BLEND_K] = copy.copy(
-                       self.data[ALPHA_BLEND_K].get())
-                    self.data[ALPHA_BLEND_Q] = copy.copy(
-                       self.data[ALPHA_BLEND_Q].get())
+                    # self.data[ALPHA_BLEND_K] = copy.copy(
+                    #    self.data[ALPHA_BLEND_K].get())
+                    # self.data[ALPHA_BLEND_Q] = copy.copy(
+                    #    self.data[ALPHA_BLEND_Q].get())
                     parent.show_m1_frame(parent.M1_Page_2, data=self.data)
                 else:
                     showinfo(
